@@ -5,9 +5,9 @@ Manage personal loyalty cards per user, displayed as QR or barcode — with opti
 
 ---
 
-## Features
+## ✨ Features
 
-- ✅ View and manage your own cards
+- ✅ View and manage your own cards in a single dashboard card
 - 👥 See cards added by other users
 - 🔄 Switch between QR code and barcode views
 - 📝 Edit or delete your cards
@@ -63,6 +63,28 @@ Manually add a Manual card with the following config:
 ```yaml
 type: 'custom:cardwallet-card'
 ```
+
+## 📸 Screenshots
+
+### My Cards
+Displays a list of cards added by the current user.
+
+![My Cards](/assets/mycards.png)
+
+---
+
+### Others' Cards
+Shows cards shared by other users, with their names.
+
+![Others' Cards](/assets/otherscards.png)
+
+---
+
+### Pop-up Barcode / QR
+Clicking a card opens a larger view of the code with actions.
+
+![Popup Barcode](/assets/barcode.png)
+
 
 ## 🙏 Credits
 
