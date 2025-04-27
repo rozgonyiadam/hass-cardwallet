@@ -1,92 +1,47 @@
 # CardWallet – Custom Integration for Home Assistant
 
-**CardWallet** is a custom integration and frontend card for Home Assistant.  
-Manage personal loyalty cards per user, displayed as QR or barcode — with optional shared access.
+**CardWallet** is a custom integration for Home Assistant that provides a backend API to manage wallet cards (e.g., loyalty cards, membership cards) linked to Home Assistant users.
 
----
-
-## ✨ Features
-
-- ✅ View and manage your own cards in a single dashboard card
-- 👥 See cards added by other users
-- 🔄 Switch between QR code and barcode views
-- 📝 Edit or delete your cards
-- ➕ Add new cards directly from the UI
-- 📱 Responsive design
-- 🔐 Per-user data isolation
+![Popup Barcode](/assets/barcode.png)
 
 ---
 
 ## 📦 Installation
 
-### 1. Copy files
+### HACS (Recommended)
 
-- Copy backend files to: `custom_components/cardwallet/`
-- Copy frontend files (JS, libs) to: `www/cardwallet/`
+Add this repository to HACS as a custom integration.
 
-> Home Assistant serves `www/` as `/local/`  
-> So `www/cardwallet/qrcode.min.js` becomes available at `/local/cardwallet/qrcode.min.js`
+- HACS → Integrations → "+" → "Custom repositories"
+- Add the repository URL: `https://github.com/rozgonyiadam/hass-cardwallet`
+- Category: Integration
+- Install and restart Home Assistant.
 
-📚 [More info on serving local files in HA](https://developers.home-assistant.io/docs/frontend/custom-ui/registering-resources)
+### Manual Installation
 
-### 2. Restart Home Assistant
-After copying files and updating config, restart HA.
+- Copy the `cardwallet` directory into your Home Assistant `config/custom_components` directory.
+- Restart Home Assistant.
 
-No restart is needed for `www/cardwallet/`, but you may need to clear your browser cache if changes don't appear.
-
-### 3. Configure configuration.yaml
+## ⚙️ Configuration
 Add the following to your configuration.yaml:
 ```yaml
 cardwallet:
 ```
-### 4. Register frontend in Lovelace
 
-To use the custom card, register the JS file in Lovelace:
+## 📚 API
 
-#### Option A – via UI (recommended)
-- Go to **Settings → Dashboards → Resources**
-- Click **"Add Resource"**
-- URL: `/local/cardwallet/cardwallet-card.js`  
-- Type: `JavaScript Module`
+This integration provides the following REST API endpoints:
 
-#### Option B – via `configuration.yaml`
-```yaml
-lovelace:
-  resources:
-    - url: /local/cardwallet/cardwallet-card.js
-      type: module
-```
+- `GET /api/cardwallet` - Get a list of cards
+- `POST /api/cardwallet` - Add a new card
+- `PUT /api/cardwallet/{card_id}` - Update a card's information
+- `DELETE /api/cardwallet/{card_id}` - Delete a card
 
-### 5. Add the card to your Dashboard
-Manually add a Manual card with the following config:
+All endpoints require an authenticated Home Assistant user.
 
-```yaml
-type: 'custom:cardwallet-card'
-```
+## 🖥️ Frontend Card
 
-## 📸 Screenshots
-
-### My Cards
-Displays a list of cards added by the current user.
-
-![My Cards](/assets/mycards.png)
+A custom Lovelace card is available to display your CardWallet cards visually:  
+👉 [lovelace-cardwallet](https://github.com/rozgonyiadam/lovelace-cardwallet)
 
 ---
-
-### Others' Cards
-Shows cards shared by other users, with their names.
-
-![Others' Cards](/assets/otherscards.png)
-
----
-
-### Pop-up Barcode / QR
-Clicking a card opens a larger view of the code with actions.
-
-![Popup Barcode](/assets/barcode.png)
-
-
-## 🙏 Credits
-
-- [QRCode.js](https://github.com/davidshimjs/qrcodejs) — Used for QR code generation
-- [JsBarcode](https://github.com/lindell/JsBarcode) — Used for barcode rendering
