@@ -31,6 +31,10 @@ class CardWalletListAPI(HomeAssistantView):
         else:
             card_data["format"] = "CODE128"
 
+        incoming_logo_slug = data.get("logo_slug")
+        if isinstance(incoming_logo_slug, str) and incoming_logo_slug.strip():
+            card_data["logo_slug"] = incoming_logo_slug.strip()
+
         card = Card(**card_data)
         saved = await self.storage.add_card(card)
 
