@@ -3,7 +3,7 @@ import aiofiles
 import os
 from typing import List, Optional
 from .path_utils import get_storage_path
-from custom_components.cardwallet.models.card import Card
+from custom_components.cardwallet.models.card import Card, DEFAULT_CARD_VIEW, coerce_default_view
 
 
 class CardStorage:
@@ -35,7 +35,8 @@ class CardStorage:
                 normalized_cards = []
                 for c in raw_list:
                     fmt = c.get("format") or "CODE128"
-                    normalized_cards.append(Card(**{**c, "format": fmt}))
+                    default_view = coerce_default_view(c.get("default_view")) or DEFAULT_CARD_VIEW
+                    normalized_cards.append(Card(**{**c, "format": fmt, "default_view": default_view}))
                 self.cards = normalized_cards
             except json.JSONDecodeError:
                 self.cards = []

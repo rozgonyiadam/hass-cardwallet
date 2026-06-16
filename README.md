@@ -37,6 +37,8 @@ This integration provides the following REST API endpoints:
 - `PUT /api/cardwallet/{card_id}` - Update a card's information
 - `DELETE /api/cardwallet/{card_id}` - Delete a card
 
+Cards may include an optional `logo_slug` field containing a `logo.dev` slug, which can be used by frontend cards to display a logo.
+
 All endpoints require an authenticated Home Assistant user.
 
 ## 🖥️ Frontend Card

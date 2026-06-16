@@ -1,4 +1,5 @@
 from homeassistant.components.http import HomeAssistantView
+from custom_components.cardwallet.models.card import coerce_default_view
 from custom_components.cardwallet.services.storage import CardStorage
 
 class CardWalletItemAPI(HomeAssistantView):
@@ -33,6 +34,12 @@ class CardWalletItemAPI(HomeAssistantView):
 
         if not user_id or not card_id:
             return self.json({"error": "missing user_id or card_id"}, status_code=400)
+
+        if "default_view" in data:
+            default_view = coerce_default_view(data.get("default_view"))
+            if default_view is None:
+                return self.json({"error": "invalid default_view"}, status_code=400)
+            data["default_view"] = default_view
 
         updated = await self.storage.update_card(user_id, card_id, data)
         if updated:

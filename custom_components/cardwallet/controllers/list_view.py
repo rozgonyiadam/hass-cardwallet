@@ -1,5 +1,5 @@
 from homeassistant.components.http import HomeAssistantView
-from custom_components.cardwallet.models.card import Card
+from custom_components.cardwallet.models.card import Card, DEFAULT_CARD_VIEW, coerce_default_view
 from custom_components.cardwallet.services.storage import CardStorage
 from uuid import uuid4
 
@@ -30,6 +30,18 @@ class CardWalletListAPI(HomeAssistantView):
             card_data["format"] = incoming_format.strip()
         else:
             card_data["format"] = "CODE128"
+
+        incoming_logo_slug = data.get("logo_slug")
+        if isinstance(incoming_logo_slug, str) and incoming_logo_slug.strip():
+            card_data["logo_slug"] = incoming_logo_slug.strip()
+
+        if "default_view" in data:
+            default_view = coerce_default_view(data.get("default_view"))
+            if default_view is None:
+                return self.json({"error": "invalid default_view"}, status_code=400)
+            card_data["default_view"] = default_view
+        else:
+            card_data["default_view"] = DEFAULT_CARD_VIEW
 
         card = Card(**card_data)
         saved = await self.storage.add_card(card)
