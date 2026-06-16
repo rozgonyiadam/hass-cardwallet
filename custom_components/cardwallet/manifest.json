@@ -1,7 +1,7 @@
 {
   "domain": "cardwallet",
   "name": "HASS Card Wallet",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "documentation": "https://github.com/rozgonyiadam/hass-cardwallet",
   "dependencies": [],
   "codeowners": [ "@rozgonyiadam" ],
